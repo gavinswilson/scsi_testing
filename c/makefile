@@ -22,4 +22,4 @@ clean:
 	rm -f $(TARGET) $(OBJECTS)*.o
 	@echo "Cleaned up build files."
 
-.PHONY: all clean
+.PHONY: all clean debug
