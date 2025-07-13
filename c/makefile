@@ -1,4 +1,5 @@
-
+# Makefile for building the scsi_serial module
+# This Makefile compiles the source code and generates the executable.
 TARGET := scsi_serial
 SOURCES := scsi_serial.c
 OBJECTS := $(SOURCES:%.c=%.o)
@@ -21,4 +22,4 @@ clean:
 	rm -f $(TARGET) $(OBJECTS)*.o
 	@echo "Cleaned up build files."
 
-.PHONY: all clean
+.PHONY: all clean debug
