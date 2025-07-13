@@ -1,0 +1,41 @@
+# initialise repo
+
+echo "# scsi_testing" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/gavinswilson/scsi_testing.git
+git push -u origin main
+
+
+# branch management
+
+# Create and switch to a new branch
+git checkout -b feature-branch-name
+
+# Make your edits/changes to files
+# (edit files using your preferred editor)
+
+# Stage and commit your changes
+git add .
+git commit -m "Your commit message"
+
+# Push the branch to remote repository
+git push -u origin feature-branch-name
+
+# Create pull request (done through GitHub/GitLab web interface or CLI)
+# For GitHub CLI: gh pr create --title "PR Title" --body "PR description"
+
+# After PR is merged, delete the local branch
+git branch -d feature-branch-name
+
+# Delete the remote branch
+git push origin --delete feature-branch-name
+
+# Switch back to main branch
+git checkout main
+
+# Fetch and pull latest changes from remote
+git fetch origin
+git pull origin main
