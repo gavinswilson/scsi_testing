@@ -1,7 +1,7 @@
 name: do something exciting
 on: [push]
 jobs:
-  build::
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -13,7 +13,6 @@ jobs:
       - name: Install Dependancies
         run: |
           python -m pip install --upgrade pip
-          pip install pyyaml
       - name: Run Feed Generator
         run: python update.py
       - name: push repo
