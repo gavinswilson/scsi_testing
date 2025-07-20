@@ -3,6 +3,7 @@ import fcntl
 import os
 import sys
 
+
 SG_IO = 0x2285
 SG_DXFER_FROM_DEV = -3
 INQ_REPLY_LEN = 96
