@@ -1,19 +1,24 @@
 import subprocess
 import struct
 import re
+from typing import Optional
 
 
 class scsi_device:
     def __init__(self, device: str):
-        self.device = device
-        self.size = 0
-        self.block_size = 0
-        self.no_blocks = 0
-        self.serial_number = None
-        self.model = None
-        self.vendor = None  
-        self.firmware_version = None
-        
+        self.device: str = device
+        # device info
+        self.serial_number: Optional[str] = None
+        self.model: Optional[str] = None
+        self.vendor: Optional[str] = None
+        self.firmware_version: Optional[str] = None
+        # physical info
+        self.size: int = 0
+        self.block_size: int = 0
+        self.no_blocks: int = 0
+        # read capacity
+        self.errors: list[str] = []
+
     def __repr__(self) -> str:
         """
         __repr__ is meant to provide an unambiguous string representation of the object.
@@ -49,7 +54,17 @@ class scsi_device:
 
 
     def read_capacity(self) -> bool:
-        # print(f"[+] Sending READ CAPACITY (10) to {self.device}")
+        """
+        read_capacity reads the SCSI device's capacity using the READ CAPACITY (10) command.
+        It retrieves the total number of blocks and block size, which are essential for further operations.
+        Returns True if successful, otherwise raises an error.
+        Raises RuntimeError if the command fails or if the response is invalid.
+        The last LBA is the highest addressable block on the device, and the block length
+        is the size of each block in bytes. The total number of blocks is calculated as
+        last LBA + 1, and the total size of the device is calculated as total_blocks * block_len.
+        The method also sets the instance variables size, block_size, and no_blocks
+        to reflect the device's capacity.
+        """
         cmd: list[str] = ["sg_raw", "-r", "8", self.device, "25", "00", "00", "00", "00", "00", "00", "00", "00", "00"]
 
         data: str = ""  # Ensure 'data' is always defined
@@ -80,10 +95,7 @@ class scsi_device:
         self.size = total_blocks * block_len
         self.block_size = block_len
         self.no_blocks = total_blocks
-        # print(f"\nParsed READ CAPACITY response:")
-        # print(f"    Total blocks : {total_blocks}")
-        # print(f"    Block size   : {block_len} bytes")
-
+        
         return True
 
     def __sg_raw_read10(self, device: str, lba: int, num_blocks: int, block_size: int) -> bytes:

@@ -1,0 +1,5 @@
+Info Type	VPD Page	sg_raw Command
+Vendor, Part, FW	Std	sg_raw -r 96 /dev/sgX 12 00 00 00 60 00
+Serial Number	0x80	sg_raw -r 64 /dev/sgX 12 01 80 00 40 00
+Device Identification	0x83	sg_raw -r 64 /dev/sgX 12 01 83 00 40 00
+
